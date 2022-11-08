@@ -1,0 +1,6 @@
+
+GET https://localhost:7047/api/product/ HTTP/1.1
+#
+GET https://localhost:7047/api/product/5 HTTP/1.1
+#
+
