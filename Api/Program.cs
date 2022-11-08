@@ -1,4 +1,5 @@
 using Infrastructure;
+using Infrastructure.Data;
 using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,5 +28,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+var provider=app.Services.CreateScope().ServiceProvider;
+await MigrationHelper.RunMigration(provider);
 
 app.Run();
