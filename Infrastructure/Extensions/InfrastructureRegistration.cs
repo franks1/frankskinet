@@ -17,7 +17,7 @@ namespace Infrastructure.Extensions
           service.AddDbContext<StoreContext>((option)=>{
                 option.UseSqlite(configuration.GetConnectionString("appconnection"));
           });
-
+        service.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
         service.AddScoped<IProductRepository,ProductRepository>();
 
 
