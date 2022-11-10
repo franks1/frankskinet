@@ -2,19 +2,16 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.Migrations
+namespace Infrastructure.Data.InMigration
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221108192748_InitialCreate")]
-    partial class InitialCreate
+    partial class StoreContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -32,11 +29,12 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 4)
+                    b.Property<string>("PictureUrl")
+                        .HasMaxLength(250)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PrictureUrl")
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 4)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ProductBrandId")

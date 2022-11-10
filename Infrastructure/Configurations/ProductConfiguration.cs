@@ -13,7 +13,7 @@ namespace Api.Configurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.Property(a=>a.Name).HasMaxLength(150).IsRequired(false);
-            builder.Property(a=>a.PrictureUrl).IsRequired(false);
+            builder.Property(a=>a.PictureUrl).HasMaxLength(250).IsRequired(false);
 
             builder.Property(a=>a.Price).HasPrecision(18,4);
             
