@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using System.Reflection;
+using Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +26,16 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+   // app.UseDeveloperExceptionPage();
 }
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 app.UseStaticFiles();
 app.UseHttpsRedirection();
