@@ -8,6 +8,10 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using System.Reflection;
 using Api.Middleware;
+using Microsoft.AspNetCore.Mvc;
+using Api.Errors;
+using Microsoft.OpenApi.Models;
+using Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +19,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddControllers();
 builder.Services.InfrastructureServiceRegistration(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddSwaggerDocumentation();
 
+builder.Services.AddCors((option)=>{
 
+    option.AddPolicy("CorsPolicy",(p)=>p.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:7047"));
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+});
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
@@ -32,19 +37,21 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-   // app.UseDeveloperExceptionPage();
+    // app.UseDeveloperExceptionPage();
 }
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
+
+
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
-var provider=app.Services.CreateScope().ServiceProvider;
+var provider = app.Services.CreateScope().ServiceProvider;
 await MigrationHelper.RunMigration(provider);
 
 app.Run();

@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Dto;
+using Api.Errors;
+using Api.Helper;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using Core.Specifications.ProductSpecification;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +16,7 @@ namespace Api.Controllers
 {
     // [ApiController]
     // [Route("api/products")]
-    public class ProductController : BaseApiController
+    public class ProductsController : BaseApiController
     {
         private readonly IProductRepository repository;
 
@@ -23,7 +26,7 @@ namespace Api.Controllers
         private readonly IGenericRepository<ProductType> productTypeRepository;
         private readonly IMapper mapper;
 
-        public ProductController(IProductRepository repository,
+        public ProductsController(IProductRepository repository,
         IGenericRepository<Product> productRepository,
         IGenericRepository<ProductBrand> productBrandRepository,
         IGenericRepository<ProductType> productTypeRepository,
@@ -39,13 +42,17 @@ namespace Api.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts([FromQuery] ProductSpecParams productParams)
         {
-            var specification = new ProductWithTypeAndBrandSpecification();
+            var specification = new ProductWithTypeAndBrandSpecification(productParams);
+            var countspecification = new ProductWithFiltersForCountSpecification(productParams);
+
+            var totalItems = await productRepository.CountAsync(countspecification);
             var products = await this.productRepository.ListAysnc(specification);
-            var dto=mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
-            
-            return Ok(dto);
+            var dto = mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
+            var paginationresponse = new Pagination<ProductToReturnDto>(productParams.PageSize,
+            productParams.PageIndex, totalItems, dto);
+            return Ok(paginationresponse);
         }
 
         [HttpGet("brands")]
@@ -63,10 +70,15 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProduct(int id)
         {
             var specification = new ProductWithTypeAndBrandSpecification(id);
             var product = await this.productRepository.GetEntityWithSpec(specification);
+            if (product is null) return NotFound(new ApiResponse(404));
+
+
             var dto = mapper.Map<ProductToReturnDto>(product);
             return Ok(dto);
         }

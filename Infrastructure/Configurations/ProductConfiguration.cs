@@ -15,7 +15,7 @@ namespace Api.Configurations
             builder.Property(a=>a.Name).HasMaxLength(150).IsRequired(false);
             builder.Property(a=>a.PictureUrl).HasMaxLength(250).IsRequired(false);
 
-            builder.Property(a=>a.Price).HasPrecision(18,4);
+            builder.Property(a=>a.Price).HasPrecision(18,2);
             
             builder.HasOne(a=>a.ProductType).WithMany()
             .HasForeignKey(a=> a.ProductTypeId).OnDelete(DeleteBehavior.Cascade);

@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Infrastructure.Data.InMigration
+namespace Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,7 +44,7 @@ namespace Infrastructure.Data.InMigration
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Price = table.Column<decimal>(type: "TEXT", precision: 18, scale: 4, nullable: false),
+                    Price = table.Column<double>(type: "REAL", precision: 18, scale: 2, nullable: false),
                     PictureUrl = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
                     ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductBrandId = table.Column<int>(type: "INTEGER", nullable: false)
