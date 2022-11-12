@@ -42,8 +42,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
-
-
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseRouting();
