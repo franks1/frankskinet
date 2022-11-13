@@ -42,6 +42,7 @@ namespace Api.Controllers
         }
 
         [HttpGet()]
+         [ProducesResponseType(typeof(Pagination<ProductToReturnDto>), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProducts([FromQuery] ProductSpecParams productParams)
         {
             var specification = new ProductWithTypeAndBrandSpecification(productParams);
@@ -71,7 +72,7 @@ namespace Api.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProductToReturnDto), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProduct(int id)
         {
             var specification = new ProductWithTypeAndBrandSpecification(id);
