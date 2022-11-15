@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <section class="col-3">
+            <h5 class="text-warning ml-3 my-1 mb-2">Sort </h5>
+            <select #sortoption class="custom-select" (change)="onSortSelected(sortoption.value)">
+                <option *ngFor="let opt of sortOptions" [value]="opt.value">
+                    {{opt.name}}
+                </option>
+
+            </select>
+            <h5 class="text-warning ml-3">Brands </h5>
+            <ul class="list-group my-2">
+                <li class="list-group-item" *ngFor="let brand of brands"
+                    [class.active]="brand.id === this.shopParams.brandId" [value]="brand.id"
+                    (click)="onBrandSelected(brand.id)">{{brand.name}}</li>
+            </ul>
+            <h5 class="text-warning ml-3">Types </h5>
+            <ul class="list-group my-2">
+                <li class="list-group-item" *ngFor="let producttype of producttypes"
+                    [class.active]="producttype.id===this.shopParams.typeId" [value]="producttype.id"
+                    (click)="onTypeSelected(producttype.id)">{{producttype.name}}
+                </li>
+            </ul>
+        </section>
+        <section class="col-9">
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <app-paging-header [pageNumber]="this.shopParams.pageNumber" [pageSize]="this.shopParams.pageSize"
+                    [totalCount]="this.totalCount"></app-paging-header>
+                <div class="form-inline mt-2">
+                    <input (keyup.enter)="this.onSearch()" #search class="form-control-sm me-2" style="width: 300px" placeholder="search" type="text" />
+                    <button (click)="this.onSearch()" class="btn btn-outline-primary my-2 me-1">Search</button>
+                    <button (click)="this.onReset()" class="btn btn-outline-success my-2">Reset</button>
+                </div>
+            </div>
+            <!--<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">-->
+            <div class="row">
+                <div class="col-4" *ngFor="let product of products">
+                    <app-product-item [product]="product"></app-product-item>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center" *ngIf="this.totalCount>0">
+                <app-pager [totalCount]="this.totalCount" [pageSize]="this.shopParams.pageSize"
+                    (pageChanged)="this.onPageChanged($event)"></app-pager>
+            </div>
+        </section>
+    </div>
+
+</div>
