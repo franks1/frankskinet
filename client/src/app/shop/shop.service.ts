@@ -6,6 +6,7 @@ import { IPagination } from 'src/app/shared/models/pagination';
 import { IBrand } from '../shared/models/brand';
 import { IType } from '../shared/models/producttype';
 import { ShopParams } from '../shared/models/shopParams';
+import { IProduct } from '../shared/models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,12 @@ export class ShopService {
 
   private url: string = environment.baseUrl;
   constructor(private http: HttpClient) { }
+
+  getProduct(id:number):Observable<IProduct>{
+
+     return this.http.get<IProduct>(this.url+'products/'+id);
+  }
+
 
   getProducts(shopparams: ShopParams): Observable<IPagination> {
     let params = new HttpParams();

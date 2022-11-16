@@ -2,11 +2,15 @@
 <!-- <div class="container-fluid"></div> -->
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3
     justify-content-between shadow-sm fixed">
-    <img src="../../assets/images/logo.png" style="max-height: 70px;" alt="logo">
+    <img src="../../assets/images/logo.png" style="max-height: 70px;" class="logo" alt="logo" routerLink="/">
         <nav class="my-2 my-md-0 mr-md-3 text-uppercase" style="font-size: larger;">
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Home</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Shop</a>
-            <a class="me-3 py-2 text-dark text-decoration-none" href="#">Contact</a>        
+            <a class="me-3 py-2 text-dark" 
+            routerLink="/" 
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}"
+            href="#">Home</a>
+            <a class="me-3 py-2 text-dark" [routerLink]="'/shop'" routerLinkActive="active"  href="#">Shop</a>
+            <a class="me-3 py-2 text-dark" href="#">Contact</a>        
         </nav>
         <div class="d-flex align-items center">
             <a class="position-relative">
