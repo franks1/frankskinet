@@ -1,0 +1,14 @@
+<div class="container mt-5">
+    <h1>Error 500: Internal server error</h1>
+<<ng-container *ngIf="error" >
+    <h5 class="text-danger">Error: {{this.error.Message}}</h5>    
+    <p style="font-weight: bold">If you're seeing this error then the app may not be responsible</p>
+    <p>What to do next?</p>
+    <ol>
+        <li>Inspect  the network tab</li>
+        <li>Check the failing request</li>
+        <li>Examine the url and check if it is correct</li>
+    </ol>
+</ng-container>
+
+</div>

@@ -23,7 +23,7 @@ namespace Api.Controllers
             var product = this.context.Product.Find(10001);
             if (product is null) { return NotFound(new ApiResponse(404)); }
 
-            return Ok(product);
+            return NotFound(product);
         }
 
         
@@ -32,7 +32,7 @@ namespace Api.Controllers
         {
             var product = this.context.Product.Find(10001);
            var result=product.ToString();
-            return Ok();
+            return Ok(result);
         }
 
         
@@ -40,8 +40,8 @@ namespace Api.Controllers
         public IActionResult GetBadRequestResult()
         {
             var product = this.context.Product.Find(10001);
-           var result=product.ToString();
-            return Ok();
+         //  var result=product.ToString();
+            return BadRequest();
         }
 
 
