@@ -1,6 +1,11 @@
+<ngx-spinner type="timer"
+             bdColor="rgba(255, 255, 255, 0.8)"
+             color="#333333" [fullScreen] = "true">
+  <h2>Loading...</h2>
+</ngx-spinner>
 
 <app-nav-bar></app-nav-bar>
-<div class="container">    
+<app-section-header></app-section-header>
+<div class="container">
  <router-outlet></router-outlet>
-    
 </div>
