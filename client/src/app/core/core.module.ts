@@ -9,7 +9,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import {NgDynamicBreadcrumbModule} from "ng-dynamic-breadcrumb";
-//import {BreadcrumbModule} from "xng-breadcrumb";
 
 
 
