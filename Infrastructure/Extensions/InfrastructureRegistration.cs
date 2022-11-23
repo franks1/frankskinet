@@ -19,8 +19,8 @@ namespace Infrastructure.Extensions
           });
         service.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
         service.AddScoped<IProductRepository,ProductRepository>();
+        service.AddScoped<IBasketRepository, BasketRepository>();
 
-
-        }
+       }
     }
 }

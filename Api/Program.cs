@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Errors;
 using Microsoft.OpenApi.Models;
 using Api.Extensions;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,10 +23,18 @@ builder.Services.InfrastructureServiceRegistration(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerDocumentation();
 
-builder.Services.AddCors((option)=>{
+builder.Services.AddCors((option) =>
+{
+    option.AddPolicy("CorsPolicy",
+        (p) => p.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+});
 
-    option.AddPolicy("CorsPolicy",(p)=>p.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
-
+builder.Services.AddSingleton<IConnectionMultiplexer>((a) =>
+{
+    var conn = ConfigurationOptions
+        .Parse(builder.Configuration.GetConnectionString("redis") ?? string.Empty,
+            true);
+    return ConnectionMultiplexer.Connect(conn);
 });
 var app = builder.Build();
 
