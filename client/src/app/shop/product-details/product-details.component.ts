@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { IProduct } from 'src/app/shared/models/product';
-import { ShopService } from '../shop.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {IProduct} from 'src/app/shared/models/product';
+import {ShopService} from '../shop.service';
+import {BasketService} from "../../basket/basket.service";
 
 @Component({
   selector: 'app-product-details',
@@ -11,15 +12,34 @@ import { ShopService } from '../shop.service';
 export class ProductDetailsComponent implements OnInit {
 
   product!: IProduct;
-   point: number=0;
+  point: number = 0;
+  quantity = 1;
 
-  constructor(private service: ShopService, private activatedRoute: ActivatedRoute) { }
+
+  constructor(private service: ShopService,
+              private activatedRoute: ActivatedRoute,
+              private basketService: BasketService) {
+  }
+
+  addItemToBasket(product: IProduct) {
+    this.basketService.addItemToBasket(product, this.quantity);
+  }
+
+  increaseQuantity() {
+    this.quantity++;
+  }
+
+  decreaseQuantity()
+  {
+    if (this.quantity > 1)
+      this.quantity--;
+  }
 
   ngOnInit(): void {
     var id_params = this.activatedRoute.snapshot.paramMap.get('id');
 
     if (id_params) {
-        this.point= Number.parseInt(id_params); 
+      this.point = Number.parseInt(id_params);
 
       this.loadProduct(this.point);
     }
