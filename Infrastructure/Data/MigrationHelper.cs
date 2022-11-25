@@ -1,5 +1,7 @@
-
 using System.Threading.Tasks;
+using Core.Entities.Identity;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,12 +24,15 @@ namespace Infrastructure.Data
                     log.LogInformation("Initializing migration");
                     await context.Database.MigrateAsync();
                     log.LogInformation("Migration successfully completed");
-                    await StoreContextSeed.SeedData(context,logger);
+                    await StoreContextSeed.SeedData(context, logger);
 
+                    var userManager = service.GetRequiredService<UserManager<AppUser>>();
+                    var identityDbContext = service.GetRequiredService<AppIdentityDbContext>();
+                    await AppIdentitySeed.SeedIdentityUsers(userManager, log);
                 }
                 catch (System.Exception e)
                 {
-                    log.LogError(e, "An erro occurred during migration");
+                    log.LogError(e, "An error occurred during migration");
                 }
             }
         }

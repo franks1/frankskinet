@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Errors;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -16,6 +17,10 @@ namespace Api.Controllers
         {
             this.context = context;
         }
+
+        [HttpGet("testauth")]
+       [Authorize]
+        public  IActionResult TestAuth() =>  Ok("This is secret");
 
         [HttpGet("notfound")]
         public IActionResult GetNotFoundResult()

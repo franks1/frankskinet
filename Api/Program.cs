@@ -1,16 +1,7 @@
-using Infrastructure;
 using Infrastructure.Data;
 using Infrastructure.Extensions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using AutoMapper;
 using System.Reflection;
 using Api.Middleware;
-using Microsoft.AspNetCore.Mvc;
-using Api.Errors;
-using Microsoft.OpenApi.Models;
 using Api.Extensions;
 using StackExchange.Redis;
 
@@ -20,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddControllers();
 builder.Services.InfrastructureServiceRegistration(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerDocumentation();
 
@@ -36,8 +28,9 @@ builder.Services.AddSingleton<IConnectionMultiplexer>((a) =>
             true);
     return ConnectionMultiplexer.Connect(conn);
 });
-var app = builder.Build();
 
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
@@ -55,6 +48,7 @@ app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("CorsPolicy");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

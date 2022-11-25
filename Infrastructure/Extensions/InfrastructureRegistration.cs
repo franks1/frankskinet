@@ -17,6 +17,12 @@ namespace Infrastructure.Extensions
           service.AddDbContext<StoreContext>((option)=>{
                 option.UseSqlite(configuration.GetConnectionString("appconnection"));
           });
+          
+          service.AddDbContext<AppIdentityDbContext>((option)=>{
+              option.UseSqlite(configuration.GetConnectionString("identityconnection"));
+          });
+          
+          
         service.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
         service.AddScoped<IProductRepository,ProductRepository>();
         service.AddScoped<IBasketRepository, BasketRepository>();
