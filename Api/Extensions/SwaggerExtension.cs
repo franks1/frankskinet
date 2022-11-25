@@ -10,7 +10,28 @@ namespace Api.Extensions
     {
         public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {
-            services.AddSwaggerGen(a => a.SwaggerDoc("v1", new OpenApiInfo { Title = "Skinet Api", Version = "v1" }));
+            services.AddSwaggerGen((gen) =>
+            {
+                gen.SwaggerDoc("v1", new OpenApiInfo() { Title = "Skinet Api", Version = "v1" });
+                var securityScheme = new OpenApiSecurityScheme()
+                {
+                    Description = "JWT Authentication Bearer",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference()
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                
+                gen.AddSecurityDefinition("Bearer", securityScheme);
+                var securityRequirement = new OpenApiSecurityRequirement { { securityScheme, new[] { "Bearer" } } };
+    
+                gen.AddSecurityRequirement(securityRequirement);
+            });
             return services;
         }
     }

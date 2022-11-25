@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Api.Dto;
+﻿using Api.Dto;
 using Api.Errors;
 using Api.Extensions;
 using AutoMapper;
@@ -90,6 +89,15 @@ public class AccountController : BaseApiController
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto register)
     {
+        if (CheckEmailAddressExist(register.Email).Result.Value)
+        {
+            return BadRequest(new ApiValidationResponse()
+            {
+                Errors = new[]{"Email address in use"}
+            });
+        }
+        
+        
         var newuser = new AppUser()
         {
             Email = register.Email,

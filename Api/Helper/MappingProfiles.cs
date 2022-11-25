@@ -19,7 +19,8 @@ namespace Api.Helper
             ForMember(a => a.PrictureUrl, x => x.MapFrom<ProductUrlResolver>());
 
             CreateMap<Address, AddressDto>().ReverseMap();
-
+            CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
+            CreateMap<BasketItem, BasketItemDto>().ReverseMap();
         }
 
     }

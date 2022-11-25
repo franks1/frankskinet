@@ -1,8 +1,16 @@
-﻿namespace Api.Dto;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Api.Dto;
 
 public class RegisterDto
 {
+    [Required]
     public string DisplayName { get; set; }
+    [Required]
+    [EmailAddress]
     public string Email { get; set; }
+    [Required]
+    [RegularExpression("(?=^.{6,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\\s).*$",
+        ErrorMessage = "Password must be valid")]
     public string Password { get; set; }
 }
