@@ -23,8 +23,9 @@ namespace Api.Errors
                 400 => "A bad request, you have made",
                 401 => "Unauthorised, you are not",
                 404 => "Resource found, it was not",
-                500 => "Error",
-                _ => "Unknow error"
+                500 => "Internal server error",
+                503 => "Service Unavailable",
+                _ => "Unknown error"
             };
         }
 

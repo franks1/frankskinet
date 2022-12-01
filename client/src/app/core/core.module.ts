@@ -9,6 +9,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import {NgDynamicBreadcrumbModule} from "ng-dynamic-breadcrumb";
+import {SharedModule} from "../shared/shared.module";
 
  @NgModule({
   declarations: [NavBarComponent, TestErrorComponent, ServerErrorComponent, NotFoundComponent, SectionHeaderComponent],
@@ -17,6 +18,7 @@ import {NgDynamicBreadcrumbModule} from "ng-dynamic-breadcrumb";
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right', preventDuplicates: true
     }), NgDynamicBreadcrumbModule,
+    SharedModule
   ],
   exports: [NavBarComponent,SectionHeaderComponent]
 })

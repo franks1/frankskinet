@@ -26,7 +26,9 @@ public class AccountController : BaseApiController
         _tokenService = tokenService;
     }
 
-    [HttpGet(), Authorize]
+    
+    [HttpGet("user")]
+    [Authorize]
     public async Task<IActionResult> GetCurrentUser()
     {
         var userInfo =await _userManager.FindUserFromClaimsPrincipal(User);
