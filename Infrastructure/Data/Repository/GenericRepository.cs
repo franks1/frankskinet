@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Core.Entities.Base;
 using Core.Interfaces;
 using Core.Specifications;
@@ -29,7 +25,7 @@ namespace Infrastructure.Data.Repository
         {
           return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
-        public async Task<IReadOnlyList<T>> ListAysnc(ISpecification<T> specification)
+        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification)
         {
             return await  ApplySpecification(specification).ToListAsync();
         }
@@ -41,6 +37,22 @@ namespace Infrastructure.Data.Repository
         public Task<int> CountAsync(ISpecification<T> specification)
         {
             return ApplySpecification(specification).CountAsync();
+        }
+
+        public void Add(T item)
+        {
+            context.Set<T>().Add(item);
+        }
+
+        public void Update(T item)
+        {
+            context.Set<T>().Attach(item);
+            context.Entry(item).State = EntityState.Modified;
+        }
+
+        public void Delete(T item)
+        {
+            context.Set<T>().Remove(item);
         }
     }
 }

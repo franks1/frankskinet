@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data
@@ -47,6 +48,20 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                     logger.LogInformation("Products successfully migrated");
                 }
+                
+                if (!context.DeliveryMethods.Any())
+                {
+                    logger.LogInformation("Migrating product delivery methods");
+                    var deliveryData = await File.ReadAllTextAsync("../Infrastructure/SeedData/delivery.json");
+                    var data = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+                    if (data is not null)
+                    {
+                        context.DeliveryMethods.AddRange(data);
+                        await context.SaveChangesAsync();
+                        logger.LogInformation("Product delivery method successfully migrated");
+                    }
+                }
+                
             }
             catch (Exception e)
             {

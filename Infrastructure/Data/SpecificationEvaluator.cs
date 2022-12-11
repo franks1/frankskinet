@@ -33,7 +33,8 @@ namespace Infrastructure.Data
             query=query.Skip(specification.Skip).Take(specification.Take);
             }
 
-            query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
+            query = specification.Includes.Aggregate(query, 
+                (current, include) => current.Include(include));
             return query;
         }
     }

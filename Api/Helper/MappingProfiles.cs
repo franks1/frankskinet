@@ -6,7 +6,7 @@ using Api.Dto;
 using AutoMapper;
 using Core.Entities;
 using Core.Entities.Identity;
-
+using OrderAddress=Core.Entities.OrderAggregate;
 namespace Api.Helper
 {
     public class MappingProfiles : Profile
@@ -21,6 +21,7 @@ namespace Api.Helper
             CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<CustomerBasket, CustomerBasketDto>().ReverseMap();
             CreateMap<BasketItem, BasketItemDto>().ReverseMap();
+            CreateMap<AddressDto, OrderAddress.Address>().ReverseMap();
         }
 
     }

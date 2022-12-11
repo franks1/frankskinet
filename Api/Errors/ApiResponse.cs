@@ -12,8 +12,6 @@ namespace Api.Errors
             StatusCode = statusCode;
             Message = message ?? GenerateDefaultMessageForStatusCode(StatusCode);
         }
-
-
         public int StatusCode { get; set; }
         public string Message { get; set; }
         private string GenerateDefaultMessageForStatusCode(int statusCode)

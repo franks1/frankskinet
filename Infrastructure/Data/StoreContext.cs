@@ -1,12 +1,16 @@
 
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
+
 namespace Infrastructure.Data
 {
     public class StoreContext : DbContext
     {
         public StoreContext(DbContextOptions<StoreContext> options) : base(options) { }
-
+        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<DeliveryMethod> DeliveryMethods => Set<DeliveryMethod>();
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
         public DbSet<Product> Product => Set<Product>();
         public DbSet<ProductBrand> ProductBrands => Set<ProductBrand>();
         public DbSet<ProductType> ProductTypes => Set<ProductType>();
