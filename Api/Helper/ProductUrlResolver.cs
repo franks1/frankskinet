@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Api.Dto;
 using AutoMapper;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Configuration;
 
 namespace Api.Helper
@@ -24,8 +21,27 @@ namespace Api.Helper
             {
              return config["ApiUrl"]+source.PictureUrl;
             }
-
             return string.Empty;
         }
     }
+    
+    public class ProductOrderUrlResolver : IValueResolver<OrderItem, OrderItemDto, string>
+    {
+        private readonly IConfiguration config;
+
+        public ProductOrderUrlResolver(IConfiguration config)
+        {
+            this.config = config;
+        }
+        public string Resolve(OrderItem source, OrderItemDto destination,
+            string destMember, ResolutionContext context)
+        {
+            if (!string.IsNullOrEmpty(source.Ordered.PictureUrl))
+            {
+                return config["ApiUrl"]+source.Ordered.PictureUrl;
+            }
+            return string.Empty;
+        }
+    }
+    
 }
