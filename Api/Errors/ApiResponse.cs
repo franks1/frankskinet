@@ -16,7 +16,7 @@ namespace Api.Errors
         public string Message { get; set; }
         private string GenerateDefaultMessageForStatusCode(int statusCode)
         {
-            return statusCode switch
+           string output= statusCode switch
             {
                 400 => "A bad request, you have made",
                 401 => "Unauthorised, you are not",
@@ -25,6 +25,7 @@ namespace Api.Errors
                 503 => "Service Unavailable",
                 _ => "Unknown error"
             };
+           return output;
         }
 
     }

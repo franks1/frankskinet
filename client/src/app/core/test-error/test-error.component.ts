@@ -10,10 +10,9 @@ import { HttpClient } from '@angular/common/http';
 export class TestErrorComponent implements OnInit {
 
   private baseUrl: string = environment.baseUrl;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get404(): void {
     this.http.get(this.baseUrl + 'products/101').subscribe((response) => {
