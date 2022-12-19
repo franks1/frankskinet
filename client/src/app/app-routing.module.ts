@@ -5,6 +5,7 @@ import {TestErrorComponent} from './core/test-error/test-error.component';
 import {NotFoundComponent} from './core/not-found/not-found.component';
 import {ServerErrorComponent} from './core/server-error/server-error.component';
 import {AuthGuard} from "./core/guards/auth.guard";
+import {CheckoutComponent} from "./checkout/checkout.component";
 
 const routes: Routes = [
   {
@@ -31,6 +32,9 @@ const routes: Routes = [
     path: 'basket', loadChildren: () => import('../app/basket/basket.module').then(a => a.BasketModule),
     data: {title: 'Basket', breadcrumb: [{label: 'Basket', url: '/basket'}]}
   },
+  // {
+  //   path: 'checkout',component:CheckoutComponent
+  // },
   {
     path: 'checkout',
     canActivate:[AuthGuard],
